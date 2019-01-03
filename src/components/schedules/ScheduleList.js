@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchSchedules } from '../../actions';
+import moment from 'moment';
 
 class ScheduleList extends React.Component {
     componentDidMount() {
@@ -16,6 +17,8 @@ class ScheduleList extends React.Component {
 
     renderList() {
         const renderList = this.props.schedules.map(schedule => {
+        const formatedDate = moment(schedule.Date).format('DD/MM/YYYY');
+
             return (
                 <div className="item" key={schedule.Id}>
                     <div className="right floated content">
@@ -25,7 +28,7 @@ class ScheduleList extends React.Component {
                     <i className="large middle aligned icon video" />
                     <div className="content">
                         <Link to={'/schedules/' + schedule.Id} className="header">
-                            {schedule.Date}
+                            {formatedDate}
                         </Link>
                         <div className="date">
                             {schedule.Hours}
@@ -42,10 +45,9 @@ class ScheduleList extends React.Component {
         if (this.props.isSignedIn && this.props.currentUserId) {
             return (
                 <div>
-                    <h2>Schedules</h2>
                     <div style={{ textAlign: 'right' }}>
                         <Link to="/schedules/new" className="ui button primary">
-                            Create schedule
+                           Insert Hours
                         </Link>
                     </div>
                     <div className="ui celled list">
@@ -53,9 +55,10 @@ class ScheduleList extends React.Component {
                     </div>
                 </div>
             );
-        } else {
+        } 
+        else {
             return (
-                <h3>Please Log In</h3>
+                <h3> Not logged in </h3>
             );
         }
     }
@@ -66,7 +69,6 @@ class ScheduleList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
     return {
         schedules: Object.values(state.schedules),
         currentUserId: state.auth.userId,

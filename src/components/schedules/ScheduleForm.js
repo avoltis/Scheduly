@@ -1,5 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 class ScheduleForm extends React.Component {
 
@@ -25,6 +27,24 @@ class ScheduleForm extends React.Component {
         )
     }
 
+    renderDatePicker = ({ input, label, meta }) => {
+
+        const className = `field ${meta.error && meta.touched ? 'error' : ''}`
+
+        return (
+            <div className={className}>
+                <label>{label}</label>
+                <DatePicker
+                    selected={input.value || null}
+                    onChange={input.onChange}
+                    dateFormat='DD/MM/YYYY'
+                />
+                {this.renderError(meta)}
+
+            </div>
+        )
+    }
+
     onSubmit = (formValues) => {
         this.props.onSubmit(formValues);
     }
@@ -32,7 +52,11 @@ class ScheduleForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-                <Field name="Date" component={this.renderInput} label="Enter Date" />
+                <Field
+                    name="Date"
+                    component={this.renderDatePicker}
+                    label="Enter Date"
+                />
                 <Field name="Hours" component={this.renderInput} label="Enter Hours" />
                 <button className="ui button primary">Submit</button>
             </form>
