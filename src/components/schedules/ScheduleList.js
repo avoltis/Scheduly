@@ -19,32 +19,6 @@ class ScheduleList extends React.Component {
         }
     }
 
-    // renderList() {
-    //     const renderList = this.props.schedules.map(schedule => {
-    //         const formatedDate = moment(schedule.Date).format('DD/MM/YYYY');
-
-    //         return (
-    //             <div className="item" key={schedule.Id}>
-    //                 <div className="right floated content">
-    //                     <Link to={'/schedules/edit/' + schedule.Id} className="ui button primary">Edit</Link>
-    //                     <Link to={'/schedules/delete/' + schedule.Id} className="ui button negative">Delete</Link>
-    //                 </div>
-    //                 <i className="large middle aligned icon video" />
-    //                 <div className="content">
-    //                     <Link to={'/schedules/' + schedule.Id} className="header">
-    //                         {formatedDate}
-    //                     </Link>
-    //                     <div className="date">
-    //                         {schedule.Hours}
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         );
-    //     });
-
-    //     return renderList;
-    // }
-
     renderCalendarEvents() {
         const renderList = this.props.schedules.map(schedule => {
 
@@ -71,7 +45,7 @@ class ScheduleList extends React.Component {
             return (
                 <div>
                     <div style={{ textAlign: 'right' }}>
-                        <Link to="/schedules/new" className="ui button primary">
+                        <Link to="/schedules/new" className="ui green button">
                             Insert Hours
                         </Link>
                     </div>
@@ -89,15 +63,22 @@ class ScheduleList extends React.Component {
     }
 
 
-    Event({ event }) {
+    editDeleteDay({ event }) {
         return (
             <span>
                 <strong>{event.title}</strong>
                 <br></br>
-                <Link to={'/schedules/edit/' + event.id} className="ui button primary">Edit</Link>
-                <Link to={'/schedules/delete/' + event.id} className="ui button negative">Delete</Link>
+                <Link to={'/schedules/edit/' + event.id} className="ui small blue button">Edit</Link>
+                <Link to={'/schedules/delete/' + event.id} className="ui teal small button">Delete</Link>
             </span>
         )
+    }
+
+    onMonthChange() {
+        // debugger;
+
+        // this.props.schedules.foreach()
+
     }
 
     renderCalendar() {
@@ -108,13 +89,15 @@ class ScheduleList extends React.Component {
                 <div style={{ height: 500 }}>
                     <BigCalendar
                         events={calendarEvents}
-                        views={['month', 'week', 'day']}
+                        views={['month']}
+                        // views={['month', 'week', 'day']}
                         step={60}
                         showMultiDayTimes
                         defaultDate={new Date()}
                         localizer={BigCalendar.momentLocalizer(moment)}
+                        onNavigate={this.onMonthChange}
                         components={{
-                            event: this.Event
+                            event: this.editDeleteDay
                         }}
                     />
                 </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import Modal from '../Modal';
 import history from '../../history';
 import { fetchSchedule, deleteSchedule } from '../../actions';
@@ -28,7 +29,9 @@ class ScheduleDelete extends React.Component {
             return 'Are you sure you want to delete this schedule?'
         }
 
-        return 'Are you sure want to delete the schedule with date: ' + this.props.schedule.Date + ' ' + this.props.schedule.Hours
+        const formatedDate = moment(this.props.schedule.Date).format('DD/MM/YYYY');
+
+        return 'Are you sure want to delete the schedule: Date:' + formatedDate + '  Hours: ' + this.props.schedule.Hours
     }
 
     render() {

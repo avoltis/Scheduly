@@ -30,14 +30,14 @@ class ScheduleForm extends React.Component {
     renderDatePicker = ({ input, label, meta }) => {
 
         const className = `field ${meta.error && meta.touched ? 'error' : ''}`
-
+      
         return (
             <div className={className}>
                 <label>{label}</label>
                 <DatePicker
                     selected={input.value || null}
                     onChange={input.onChange}
-                    dateFormat='DD/MM/YYYY'
+                    dateFormat="d MMM, yyyy"
                 />
                 {this.renderError(meta)}
             </div>
