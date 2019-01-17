@@ -1,3 +1,7 @@
+## React-Redux Scheduler-Calendar
+
+Simple calendar to save working hours 
+
 ## Available Scripts
 
 In the project directory, you can run:
