@@ -40,7 +40,6 @@ class ScheduleForm extends React.Component {
                     dateFormat='DD/MM/YYYY'
                 />
                 {this.renderError(meta)}
-
             </div>
         )
     }
@@ -56,6 +55,7 @@ class ScheduleForm extends React.Component {
                     name="Date"
                     component={this.renderDatePicker}
                     label="Enter Date"
+                    format={(value, name) => value === '' ? null : (typeof value === 'string') ? new Date(value) : value}
                 />
                 <Field name="Hours" component={this.renderInput} label="Enter Hours" />
                 <button className="ui button primary">Submit</button>
