@@ -67,17 +67,20 @@ class ScheduleForm extends React.Component {
 const validate = (formValues) => {
     const errors = {};
 
-    if (!formValues.title) {
-        errors.title = 'You must enter hours';
+    if (!formValues.Hours) {
+        errors.Hours = 'You must enter hours';
     }
 
-    if (!formValues.description) {
-        errors.description = 'You must enter a date';
+    if (!formValues.Date) {
+        errors.Date = 'You must enter a date';
     }
     return errors;
 }
 
 export default reduxForm({
     form: 'scheduleForm',
+    initialValues: {
+        Date: new Date(),
+    },
     validate
 })(ScheduleForm);
