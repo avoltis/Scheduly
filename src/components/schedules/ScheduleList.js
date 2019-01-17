@@ -19,43 +19,44 @@ class ScheduleList extends React.Component {
         }
     }
 
-    renderList() {
-        const renderList = this.props.schedules.map(schedule => {
-            const formatedDate = moment(schedule.Date).format('DD/MM/YYYY');
+    // renderList() {
+    //     const renderList = this.props.schedules.map(schedule => {
+    //         const formatedDate = moment(schedule.Date).format('DD/MM/YYYY');
 
-            return (
-                <div className="item" key={schedule.Id}>
-                    <div className="right floated content">
-                        <Link to={'/schedules/edit/' + schedule.Id} className="ui button primary">Edit</Link>
-                        <Link to={'/schedules/delete/' + schedule.Id} className="ui button negative">Delete</Link>
-                    </div>
-                    <i className="large middle aligned icon video" />
-                    <div className="content">
-                        <Link to={'/schedules/' + schedule.Id} className="header">
-                            {formatedDate}
-                        </Link>
-                        <div className="date">
-                            {schedule.Hours}
-                        </div>
-                    </div>
-                </div>
-            );
-        });
+    //         return (
+    //             <div className="item" key={schedule.Id}>
+    //                 <div className="right floated content">
+    //                     <Link to={'/schedules/edit/' + schedule.Id} className="ui button primary">Edit</Link>
+    //                     <Link to={'/schedules/delete/' + schedule.Id} className="ui button negative">Delete</Link>
+    //                 </div>
+    //                 <i className="large middle aligned icon video" />
+    //                 <div className="content">
+    //                     <Link to={'/schedules/' + schedule.Id} className="header">
+    //                         {formatedDate}
+    //                     </Link>
+    //                     <div className="date">
+    //                         {schedule.Hours}
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         );
+    //     });
 
-        return renderList;
-    }
+    //     return renderList;
+    // }
 
     renderCalendarEvents() {
         const renderList = this.props.schedules.map(schedule => {
-            
+
             const formatedDate = moment.utc(schedule.Date).toDate();
 
             const dayEvent = {
                 title: schedule.Hours + " Hours",
                 start: formatedDate,
                 end: formatedDate,
-                allDay: false
-              }
+                allDay: false,
+                id : schedule.Id
+            }
 
             return (
                 dayEvent
@@ -76,7 +77,6 @@ class ScheduleList extends React.Component {
                     </div>
                     <div className="ui celled list">
                         {this.renderCalendar()}
-                        {/* {this.renderList()} */}
                     </div>
                 </div>
             );
@@ -89,6 +89,17 @@ class ScheduleList extends React.Component {
     }
 
 
+    Event({ event }) {
+        return (
+            <span>
+                <strong>{event.title}</strong>
+                <br></br>
+                <Link to={'/schedules/edit/' + event.id} className="ui button primary">Edit</Link>
+                <Link to={'/schedules/delete/' + event.id} className="ui button negative">Delete</Link>
+            </span>
+        )
+    }
+
     renderCalendar() {
         const calendarEvents = this.renderCalendarEvents();
 
@@ -97,11 +108,14 @@ class ScheduleList extends React.Component {
                 <div style={{ height: 500 }}>
                     <BigCalendar
                         events={calendarEvents}
-                        views={['month','week','day']}
+                        views={['month', 'week', 'day']}
                         step={60}
                         showMultiDayTimes
                         defaultDate={new Date()}
                         localizer={BigCalendar.momentLocalizer(moment)}
+                        components={{
+                            event: this.Event
+                        }}
                     />
                 </div>
             </div>
@@ -109,7 +123,7 @@ class ScheduleList extends React.Component {
     }
 
     render() {
-      return (this.renderAdmin());
+        return (this.renderAdmin());
     }
 }
 
