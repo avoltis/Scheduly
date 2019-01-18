@@ -2,23 +2,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import Loader from 'react-loader';
 import Modal from '../Modal';
 import history from '../../history';
 import { fetchSchedule, deleteSchedule } from '../../actions';
 
 class ScheduleDelete extends React.Component {
+    state = { loaded: true }
 
     componentDidMount() {
         this.props.fetchSchedule(this.props.match.params.id);
     }
 
-    renderActions() {
+    deleteSchedule = async () => {
+        this.setState({ loaded: false });
+
         const id = this.props.match.params.id;
-    
+        await this.props.deleteSchedule(id);
+
+        this.setState({ loaded: true });
+    }
+
+    renderActions() {
+
         return (
             //same as div, but does not show any html, keeps all element into 1 root for jsx render
             <React.Fragment>
-                <button onClick={() => this.props.deleteSchedule(id)} className="ui button negative" >Delete</button>
+                <button onClick={() => this.deleteSchedule()} className="ui button negative" >Delete</button>
                 <Link to="/" className="ui button">Cancel</Link>
             </React.Fragment>
         );
@@ -36,12 +46,14 @@ class ScheduleDelete extends React.Component {
 
     render() {
         return (
-            <Modal
-                title="Delete Schedule"
-                content={this.renderContent()}
-                actions={this.renderActions()}
-                onDismiss={() => history.push('/')}
-            />
+            <Loader loaded={this.state.loaded}>
+                <Modal
+                    title="Delete Schedule"
+                    content={this.renderContent()}
+                    actions={this.renderActions()}
+                    onDismiss={() => history.push('/')}
+                />
+            </Loader>
         )
     }
 }

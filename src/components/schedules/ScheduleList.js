@@ -25,6 +25,33 @@ class ScheduleList extends React.Component {
         }
     }
 
+    editDeleteDay({ event }) {
+        return (
+            <span>
+                <strong>{event.title}</strong>
+                <br></br>
+                <Link to={'/schedules/edit/' + event.id} className="ui small blue button">Edit</Link>
+                <Link to={'/schedules/delete/' + event.id} className="ui teal small button">Delete</Link>
+            </span>
+        )
+    }
+
+    onMonthChange = (date, view) => {
+        const selectedMonth = moment(date).format('MMM, YYYY');
+        let totalMonthHours = 0;
+
+        this.props.schedules.forEach(schedule => {
+            let month = moment(moment.utc(schedule.Date).toDate()).format('MMM, YYYY');
+
+            if (selectedMonth === month) {
+                totalMonthHours = totalMonthHours + schedule.Hours;
+            }
+        });
+
+        this.setState({ selectedMonth, totalMonthHours })
+
+    }
+
     renderCalendarEvents() {
         const renderList = this.props.schedules.map(schedule => {
 
@@ -44,6 +71,30 @@ class ScheduleList extends React.Component {
         });
 
         return renderList;
+    }
+
+    renderCalendar() {
+        const calendarEvents = this.renderCalendarEvents();
+
+        return (
+            <div>
+                <div style={{ height: 500 }}>
+                    <BigCalendar
+                        events={calendarEvents}
+                        views={['month']}
+                        // views={['month', 'week', 'day']}
+                        step={60}
+                        showMultiDayTimes
+                        defaultDate={new Date()}
+                        localizer={BigCalendar.momentLocalizer(moment)}
+                        onNavigate={this.onMonthChange}
+                        components={{
+                            event: this.editDeleteDay
+                        }}
+                    />
+                </div>
+            </div>
+        );
     }
 
     renderAdmin() {
@@ -69,59 +120,6 @@ class ScheduleList extends React.Component {
                 <h3> Not logged in </h3>
             );
         }
-    }
-
-
-    editDeleteDay({ event }) {
-        return (
-            <span>
-                <strong>{event.title}</strong>
-                <br></br>
-                <Link to={'/schedules/edit/' + event.id} className="ui small blue button">Edit</Link>
-                <Link to={'/schedules/delete/' + event.id} className="ui teal small button">Delete</Link>
-            </span>
-        )
-    }
-
-    onMonthChange = (date, view) => {
-
-        const selectedMonth = moment(date).format('MMM, YYYY');
-        let totalMonthHours = 0;
-
-        this.props.schedules.forEach(schedule => {
-            let month = moment(moment.utc(schedule.Date).toDate()).format('MMM, YYYY');
-
-            if (selectedMonth === month) {
-                totalMonthHours = totalMonthHours + schedule.Hours;
-            }
-        });
-
-        this.setState({ selectedMonth, totalMonthHours })
-
-    }
-
-    renderCalendar() {
-        const calendarEvents = this.renderCalendarEvents();
-
-        return (
-            <div>
-                <div style={{ height: 500 }}>
-                    <BigCalendar
-                        events={calendarEvents}
-                        views={['month']}
-                        // views={['month', 'week', 'day']}
-                        step={60}
-                        showMultiDayTimes
-                        defaultDate={new Date()}
-                        localizer={BigCalendar.momentLocalizer(moment)}
-                        onNavigate={this.onMonthChange}
-                        components={{
-                            event: this.editDeleteDay
-                        }}
-                    />
-                </div>
-            </div>
-        );
     }
 
     render() {
