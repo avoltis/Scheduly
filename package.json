@@ -1,23 +1,23 @@
 {
-  "name": "client",
-  "version": "0.1.0",
-  "private": true,
+  "name": "client_scheduler",
+  "version": "1.0.0",
+  "description": "Simple calendar to save working hours",
+  "main": "index.js",
+  "engines": {
+    "node": "10.14.1"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
-    "react": "^16.6.3",
     "react-big-calendar": "^0.20.3",
     "react-datepicker": "^2.0.0",
-    "react-dom": "^16.6.3",
     "react-loader": "^2.4.5",
-    "react-redux": "^5.1.1",
-    "react-router-dom": "^4.4.0-beta",
-    "react-scripts": "2.1.1",
     "redux": "^4.0.1",
-    "redux-form": "^8.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "redux-form": "^8.0.4"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -27,6 +27,16 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avoltis/Timetable-Scheduler.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avoltis/Timetable-Scheduler/issues"
+  },
+  "homepage": "https://github.com/avoltis/Timetable-Scheduler#readme",
   "browserslist": [
     ">0.2%",
     "not dead",
