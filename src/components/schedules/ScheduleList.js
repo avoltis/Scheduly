@@ -9,13 +9,19 @@ import moment from 'moment';
 moment.locale('en-GB');
 
 class ScheduleList extends React.Component {
+    state = {
+        totalMonthHours: 0,
+        selectedMonth: ''
+    };
+
     componentDidMount() {
 
     }
 
-    componentDidUpdate(prevProps, prevState) {
+     componentDidUpdate = async (prevProps, prevState) => {
         if (prevProps.schedules.length === 0 && this.props.currentUserId && this.props.schedules.length === 0) {
-            this.props.fetchSchedules(this.props.currentUserId);
+          await  this.props.fetchSchedules(this.props.currentUserId);
+          this.onMonthChange(new Date(), null);
         }
     }
 
@@ -29,7 +35,7 @@ class ScheduleList extends React.Component {
                 start: formatedDate,
                 end: formatedDate,
                 allDay: false,
-                id : schedule.Id
+                id: schedule.Id
             }
 
             return (
@@ -44,6 +50,9 @@ class ScheduleList extends React.Component {
         if (this.props.isSignedIn && this.props.currentUserId) {
             return (
                 <div>
+                    <div style={{ textAlign: 'left' }}>
+                        {this.state.selectedMonth} Total:  {this.state.totalMonthHours} hours
+                    </div>
                     <div style={{ textAlign: 'right' }}>
                         <Link to="/schedules/new" className="ui green button">
                             Insert Hours
@@ -74,10 +83,20 @@ class ScheduleList extends React.Component {
         )
     }
 
-    onMonthChange() {
-        // debugger;
+    onMonthChange = (date, view) => {
 
-        // this.props.schedules.foreach()
+        const selectedMonth = moment(date).format('MMM, YYYY');
+        let totalMonthHours = 0;
+
+        this.props.schedules.forEach(schedule => {
+            let month = moment(moment.utc(schedule.Date).toDate()).format('MMM, YYYY');
+
+            if (selectedMonth === month) {
+                totalMonthHours = totalMonthHours + schedule.Hours;
+            }
+        });
+
+        this.setState({ selectedMonth, totalMonthHours })
 
     }
 
