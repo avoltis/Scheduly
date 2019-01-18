@@ -10,12 +10,17 @@
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
+    "react": "^16.6.3",
     "react-big-calendar": "^0.20.3",
     "react-datepicker": "^2.0.0",
+    "react-dom": "^16.6.3",
     "react-loader": "^2.4.5",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.4.0-beta",
+    "react-scripts": "2.1.1",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "redux-form": "^8.0.4"
+    "redux-form": "^8.0.4",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {},
   "scripts": {
