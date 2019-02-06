@@ -4,7 +4,7 @@ import authReducer from './authReducer';
 import scheduleReducer from './scheduleReducer';
 
 export default combineReducers({
-    auth: authReducer,
-    form: formReducer, 
-    schedules: scheduleReducer
+  auth: authReducer,
+  form: formReducer,
+  schedules: scheduleReducer
 });
